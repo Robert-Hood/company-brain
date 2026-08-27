@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import type { AskResponse, CorrectResponse, DocMeta, User } from './types';
+import { useEffect, useState } from 'react';
+import type { AskResponse, CorrectResponse, DocMeta, Department, User } from './types';
 import {
   ConfidenceBadge,
+  DeptPill,
   EmptyState,
   SensitivityBadge,
   Spinner,
@@ -14,6 +15,8 @@ const EXAMPLES = [
   'Does fluoride count under basic or preventive for Delta Dental of California?',
   "What's our refund policy for churned customers?",
 ];
+
+const DEPT_ORDER: Department[] = ['ops', 'gtm', 'product', 'engineering', 'ga'];
 
 export function AskTab({
   user,
@@ -27,8 +30,14 @@ export function AskTab({
   const [question, setQuestion] = useState('');
   /** The question that produced `result`. Corrections must be filed against this exact string. */
   const [askedQuestion, setAskedQuestion] = useState('');
-  const [chips, setChips] = useState<DocMeta[]>([]);
+
+  // The full corpus, browsable while composing a question. Reuses GET /api/ask,
+  // which already returns the index — no backend change needed for this.
+  const [allDocs, setAllDocs] = useState<DocMeta[]>([]);
+  const [browseOpen, setBrowseOpen] = useState(false);
+  // Empty = auto mode, the brain picks 5. Non-empty = the user's own selection.
   const [ticked, setTicked] = useState<string[]>([]);
+
   const [result, setResult] = useState<AskResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,13 +47,17 @@ export function AskTab({
   const [overridesDocId, setOverridesDocId] = useState('');
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    fetch('/api/ask')
+      .then((r) => r.json())
+      .then((d: { index: DocMeta[] }) => setAllDocs(d.index));
+  }, []);
+
   async function ask() {
     const q = question.trim();
     if (!q || !user) return;
 
-    // A changed question means the previous chips are about a different question,
-    // so let Claude pick again. Same question, ticked chips win.
-    const reuseChips = q === askedQuestion && chips.length > 0;
+    const manual = ticked.length > 0;
 
     setLoading(true);
     setError(null);
@@ -58,7 +71,7 @@ export function AskTab({
         body: JSON.stringify({
           question: q,
           userId: user.id,
-          ...(reuseChips ? { sourceIds: ticked } : {}),
+          ...(manual ? { sourceIds: ticked } : {}),
         }),
       });
       const data = await res.json();
@@ -67,10 +80,10 @@ export function AskTab({
       const answer = data as AskResponse;
       setResult(answer);
       setAskedQuestion(q);
-      if (!reuseChips) {
-        setChips(answer.sources);
-        setTicked(answer.sources.map((s) => s.id));
-      }
+      // Sync ticks to what was actually used, whether the brain picked it or
+      // the user did, so the panel always shows the real state and can be
+      // adjusted before the next ask.
+      setTicked(answer.sources.map((s) => s.id));
       setOverridesDocId(answer.citedDocs[0]?.id ?? '');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong');
@@ -154,38 +167,75 @@ export function AskTab({
         )}
       </div>
 
-      {chips.length > 0 && (
-        <section className="mb-6 rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <div className="mb-3 flex items-baseline justify-between">
-            <h3 className="text-sm font-medium text-slate-700">Sources in the prompt</h3>
-            <p className="text-xs text-slate-500">
-              {result?.autoSelected
-                ? 'Picked by the brain. Untick any, then ask again.'
-                : 'Your selection.'}
-            </p>
+      <section className="mb-6 rounded-lg border border-slate-200 bg-slate-50">
+        <button
+          onClick={() => setBrowseOpen((v) => !v)}
+          className="flex w-full items-center justify-between px-4 py-3 text-left"
+        >
+          <span className="flex items-center gap-2 text-sm font-medium text-slate-700">
+            <span
+              className={`inline-block text-slate-400 transition-transform ${browseOpen ? 'rotate-90' : ''}`}
+              aria-hidden
+            >
+              ▸
+            </span>
+            Sources
+          </span>
+          <span className="text-xs text-slate-500">
+            {ticked.length > 0
+              ? `${ticked.length} ${result ? 'used' : 'chosen'} — ${
+                  result?.autoSelected ? 'picked by the brain' : 'your selection'
+                }`
+              : `${allDocs.length || 31} documents available — the brain will pick 5`}
+          </span>
+        </button>
+
+        {browseOpen && (
+          <div className="border-t border-slate-200 px-4 py-3">
+            {ticked.length > 0 && (
+              <button
+                onClick={() => setTicked([])}
+                className="mb-3 text-xs text-slate-500 underline decoration-slate-300 hover:decoration-slate-700"
+              >
+                Clear selection — let the brain pick again
+              </button>
+            )}
+            <div className="space-y-3">
+              {DEPT_ORDER.map((dept) => {
+                const docs = allDocs.filter((d) => d.department === dept);
+                if (docs.length === 0) return null;
+                return (
+                  <div key={dept}>
+                    <div className="mb-1.5 flex items-center gap-1.5">
+                      <DeptPill value={dept} />
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {docs.map((doc) => {
+                        const on = ticked.includes(doc.id);
+                        return (
+                          <button
+                            key={doc.id}
+                            onClick={() => toggleChip(doc.id)}
+                            title={doc.title}
+                            className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition ${
+                              on
+                                ? 'border-slate-900 bg-slate-900 text-white'
+                                : 'border-slate-300 bg-white text-slate-500 hover:border-slate-400'
+                            }`}
+                          >
+                            <span aria-hidden>{on ? '✓' : '+'}</span>
+                            <span className="font-mono">{doc.id}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {chips.map((doc) => {
-              const on = ticked.includes(doc.id);
-              return (
-                <button
-                  key={doc.id}
-                  onClick={() => toggleChip(doc.id)}
-                  title={doc.title}
-                  className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition ${
-                    on
-                      ? 'border-slate-900 bg-slate-900 text-white'
-                      : 'border-slate-300 bg-white text-slate-500 hover:border-slate-400'
-                  }`}
-                >
-                  <span aria-hidden>{on ? '✓' : '+'}</span>
-                  <span className="font-mono">{doc.id}</span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {error && (
         <div className="mb-6 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
