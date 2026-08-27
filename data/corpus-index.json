@@ -1,0 +1,281 @@
+[
+  {
+    "id": "eng-architecture-overview",
+    "title": "Architecture overview",
+    "department": "engineering",
+    "source": "github",
+    "owner": "Nakul R",
+    "updated": "2026-06-28",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "eng-eaglesoft-sync-issues",
+    "title": "Eaglesoft sync known issues",
+    "department": "engineering",
+    "source": "github",
+    "owner": "Tom Beckett",
+    "updated": "2026-08-19",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "eng-oncall-notes",
+    "title": "On-call notes, July and August 2026",
+    "department": "engineering",
+    "source": "slack",
+    "owner": "Wes Okafor",
+    "updated": "2026-08-22",
+    "sensitivity": "phi-restricted"
+  },
+  {
+    "id": "eng-open-dental-runbook",
+    "title": "Open Dental integration runbook",
+    "department": "engineering",
+    "source": "github",
+    "owner": "Wes Okafor",
+    "updated": "2026-05-22",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "eng-portal-change-detection",
+    "title": "Portal change detection design notes",
+    "department": "engineering",
+    "source": "github",
+    "owner": "Wes Okafor",
+    "updated": "2026-04-30",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "escalation-sop",
+    "title": "Escalation SOP for verification exceptions",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Akhilesh T",
+    "updated": "2026-07-30",
+    "sensitivity": "phi-restricted"
+  },
+  {
+    "id": "ga-expense-policy",
+    "title": "Expense policy",
+    "department": "ga",
+    "source": "drive",
+    "owner": "Maya Iyer",
+    "updated": "2026-05-09",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "ga-pto-policy",
+    "title": "PTO and leave policy",
+    "department": "ga",
+    "source": "drive",
+    "owner": "Maya Iyer",
+    "updated": "2026-01-15",
+    "sensitivity": "public"
+  },
+  {
+    "id": "ga-vendor-list",
+    "title": "Vendor and tooling list",
+    "department": "ga",
+    "source": "drive",
+    "owner": "Maya Iyer",
+    "updated": "2026-06-05",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "gtm-discovery-brightsmile",
+    "title": "Discovery call notes, Bright Smile Dental Partners",
+    "department": "gtm",
+    "source": "crm",
+    "owner": "Rhea Sharma",
+    "updated": "2026-08-12",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "gtm-discovery-cedarridge",
+    "title": "Discovery call notes, Cedar Ridge Dental Group",
+    "department": "gtm",
+    "source": "crm",
+    "owner": "Rhea Sharma",
+    "updated": "2026-07-29",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "gtm-discovery-northshore",
+    "title": "Discovery call notes, Northshore Dental Alliance",
+    "department": "gtm",
+    "source": "crm",
+    "owner": "Rhea Sharma",
+    "updated": "2026-06-24",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "gtm-icp",
+    "title": "Ideal customer profile",
+    "department": "gtm",
+    "source": "notion",
+    "owner": "Jofin Joseph",
+    "updated": "2026-05-16",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "gtm-lost-deal-valleyoak",
+    "title": "Lost deal post-mortem, Valley Oak Dental Group",
+    "department": "gtm",
+    "source": "crm",
+    "owner": "Jofin Joseph",
+    "updated": "2026-07-18",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "gtm-objection-handling",
+    "title": "Objection handling",
+    "department": "gtm",
+    "source": "notion",
+    "owner": "Rhea Sharma",
+    "updated": "2026-02-27",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "gtm-pricing-notes",
+    "title": "Pricing notes and discount guidance",
+    "department": "gtm",
+    "source": "drive",
+    "owner": "Jofin Joseph",
+    "updated": "2026-01-20",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "hitl-verifier-onboarding",
+    "title": "New verifier onboarding, first two weeks",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Priya Menon",
+    "updated": "2026-08-04",
+    "sensitivity": "phi-restricted"
+  },
+  {
+    "id": "payer-aetna",
+    "title": "Aetna Dental verification playbook",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Akhilesh T",
+    "updated": "2026-07-14",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "payer-cigna",
+    "title": "Cigna Dental verification playbook",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Priya Menon",
+    "updated": "2026-05-02",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "payer-coverage-summary",
+    "title": "Payer coverage summary, top 10 by volume",
+    "department": "ops",
+    "source": "verification-db",
+    "owner": "Nakul R",
+    "updated": "2026-08-25",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "payer-delta-ca",
+    "title": "Delta Dental of California verification playbook",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Akhilesh T",
+    "updated": "2026-02-11",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "payer-guardian",
+    "title": "Guardian verification playbook",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Priya Menon",
+    "updated": "2026-04-08",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "payer-metlife",
+    "title": "MetLife verification playbook",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Akhilesh T",
+    "updated": "2026-03-04",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "product-feedback-digest",
+    "title": "Customer feedback digest, July 2026",
+    "department": "product",
+    "source": "drive",
+    "owner": "Jofin Joseph",
+    "updated": "2026-08-03",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "product-prd-claims-status",
+    "title": "PRD-014 Claims status v1",
+    "department": "product",
+    "source": "notion",
+    "owner": "Nakul R",
+    "updated": "2026-08-06",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "product-roadmap-q3",
+    "title": "Product roadmap Q3 2026",
+    "department": "product",
+    "source": "notion",
+    "owner": "Jofin Joseph",
+    "updated": "2026-07-05",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "product-ticket-nt312",
+    "title": "NT-312 Detect Aetna posterior composite downgrade automatically",
+    "department": "product",
+    "source": "jira",
+    "owner": "Nakul R",
+    "updated": "2026-08-18",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "product-ticket-nt318",
+    "title": "NT-318 Portal change detector false positives",
+    "department": "product",
+    "source": "jira",
+    "owner": "Nakul R",
+    "updated": "2026-08-21",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "qa-rubric",
+    "title": "Verification QA rubric v3",
+    "department": "ops",
+    "source": "notion",
+    "owner": "Danny Alvarez",
+    "updated": "2026-06-20",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "slack-fluoride-delta-june",
+    "title": "Slack thread, Delta Dental CA moved adult fluoride to preventive",
+    "department": "ops",
+    "source": "slack",
+    "owner": "Priya Menon",
+    "updated": "2026-06-11",
+    "sensitivity": "internal"
+  },
+  {
+    "id": "slack-metlife-perio-edge",
+    "title": "Slack thread, MetLife perio maintenance frequency edge case",
+    "department": "ops",
+    "source": "slack",
+    "owner": "Priya Menon",
+    "updated": "2026-07-02",
+    "sensitivity": "internal"
+  }
+]
