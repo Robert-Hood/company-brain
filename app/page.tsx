@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
+import icon from './icon.png';
 import { AskTab } from './components/AskTab';
 import { DocPanel } from './components/DocPanel';
 import { GapsTab } from './components/GapsTab';
@@ -52,8 +54,13 @@ export default function Page() {
       <div className="mx-auto flex max-w-7xl gap-8 px-6 py-6">
         <nav className="w-48 shrink-0">
           <div className="mb-6">
-            <div className="text-sm font-semibold text-slate-900">Company Brain</div>
-            <div className="text-xs text-slate-500">Needletail</div>
+            <div className="flex items-center gap-2">
+              <Image src={icon} alt="" width={28} height={28} priority />
+              <div>
+                <div className="text-sm font-semibold text-slate-900">Company Brain</div>
+                <div className="text-xs text-slate-500">Needletail</div>
+              </div>
+            </div>
           </div>
 
           <ul className="space-y-0.5">
