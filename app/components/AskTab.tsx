@@ -57,12 +57,21 @@ export function AskTab({
     const q = question.trim();
     if (!q || !user) return;
 
-    const manual = ticked.length > 0;
+    // Ticks only carry over to this ask if they belong to this exact question:
+    // either nothing has been asked yet (pre-ask manual browsing), or the
+    // question text hasn't changed since the ticks were set. Otherwise they
+    // are leftover from a previous, unrelated question — reusing them would
+    // silently force the wrong docs into the prompt instead of letting the
+    // brain auto-select for the new question.
+    const ticksAreStale = askedQuestion !== '' && q !== askedQuestion;
+    const sourceIds = ticksAreStale ? [] : ticked;
+    const manual = sourceIds.length > 0;
 
     setLoading(true);
     setError(null);
     setCorrecting(false);
     setCorrectionText('');
+    if (ticksAreStale) setTicked([]);
 
     try {
       const res = await fetch('/api/ask', {
@@ -71,7 +80,7 @@ export function AskTab({
         body: JSON.stringify({
           question: q,
           userId: user.id,
-          ...(manual ? { sourceIds: ticked } : {}),
+          ...(manual ? { sourceIds } : {}),
         }),
       });
       const data = await res.json();
